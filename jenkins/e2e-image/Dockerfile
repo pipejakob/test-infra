@@ -52,4 +52,25 @@ ADD ["e2e-runner.sh", \
     "/workspace/"]
 RUN ["chmod", "+x", "/workspace/get-kube.sh", "/workspace/upload-to-gcs.sh", "/workspace/sh2ju.sh"]
 
+# Add kubernetes-anywhere dependencies: jsonnet, terraform
+ENV TERRAFORM_VERSION 0.7.2
+
+RUN apt-get update && \
+    apt-get install -y unzip
+
+RUN cd /tmp && \
+    git clone https://github.com/google/jsonnet.git && \
+    ( cd jsonnet && \
+      make jsonnet && \
+      cp jsonnet /bin \
+    ) && \
+    rm -rf /tmp/jsonnet
+
+RUN mkdir -p /tmp/terraform/ && \
+    ( cd /tmp/terraform && \
+      wget https://releases.hashicorp.com/terraform/${TERRAFORM_VERSION}/terraform_${TERRAFORM_VERSION}_linux_amd64.zip && \
+      unzip terraform_${TERRAFORM_VERSION}_linux_amd64.zip -d /bin \
+    ) && \
+    rm -rf /tmp/terraform
+
 ENTRYPOINT "/workspace/e2e-runner.sh"
