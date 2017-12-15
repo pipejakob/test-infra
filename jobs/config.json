@@ -10171,7 +10171,7 @@
       "--deployment=kubernetes-anywhere",
       "--env-file=jobs/platform/gce.env",
       "--extract=ci/latest-1.9",
-      "--gcp-zone=us-central1-f",
+      "--gcp-zone=us-central1-b",
       "--kubeadm=ci",
       "--kubernetes-anywhere-kubelet-ci-version=latest-1.9",
       "--kubernetes-anywhere-kubernetes-version=latest-1.9",
